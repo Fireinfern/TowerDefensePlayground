@@ -5,28 +5,24 @@ using UnityEngine;
 public class CuyFactory : MonoBehaviour
 {
     [SerializeField]
-    private List<string> keys = new List<string>();
-    
-    [SerializeField]
-    private List<GameObject> values = new List<GameObject>();
+    private List<GameObject> cuyes;
 
     [SerializeField]
-    private Dictionary<string,GameObject> availableCuys = new Dictionary<string,GameObject>();
+    private GameObject path;
 
-    public GameObject CreateNewCuy(string key) {
-        return Instantiate(availableCuys[key]);
+    private float spawnCounter = 0;
+
+    public void SpawnCuy(int index){
+        GameObject newCuy = Instantiate<GameObject>(cuyes[index]);
+        newCuy.GetComponent<CuyController>().SetLocations(path);
+        newCuy.SetActive(true);
     }
 
-    private void GenerateXCuys(string key, int quantity){
-        for(int i = 0; i < quantity; i++){
-            CreateNewCuy(key);
-        }
-    }
-
-    public void GenerateWave(Dictionary<string, int> cuysToBeSpawned){
-        foreach (KeyValuePair<string, int> typeOfCuy in cuysToBeSpawned)
-        {
-            GenerateXCuys(typeOfCuy.Key, typeOfCuy.Value);
+    void Update() {
+        spawnCounter += Time.deltaTime;
+        if(spawnCounter >= 1.0f){
+            SpawnCuy(0);
+            spawnCounter = 0;
         }
     }
 }

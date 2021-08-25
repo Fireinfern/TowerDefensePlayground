@@ -17,9 +17,13 @@ public class CuyController : MonoBehaviour
 
     public bool Lured = false;
 
-    void Start() {
+    public void SetLocations(GameObject Path){
+        path = Path;
         Locations = new Queue<Vector3>(path.gameObject.GetComponent<LevelPath>().GetLocations());
-        
+    }
+
+    void Start() {
+        //Locations = new Queue<Vector3>(path.gameObject.GetComponent<LevelPath>().GetLocations());
     }
 
     void Update() {
@@ -43,12 +47,6 @@ public class CuyController : MonoBehaviour
         if(!ChangingLocation){
             Locations.Dequeue();
             ChangingLocation = true;
-        }
-    }
-
-    void OnTriggerEnter(Collider other){
-        if(other.tag == "Lure"){
-            Debug.Log("Hello There");
         }
     }
 }

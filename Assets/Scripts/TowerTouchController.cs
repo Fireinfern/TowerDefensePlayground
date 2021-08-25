@@ -43,7 +43,7 @@ public class TowerTouchController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.touches[0].position);
             RaycastHit hit;
             float distance;
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit,10000f, 1 << 7 , QueryTriggerInteraction.Ignore))
             {
                 if (hit.collider != null)
                 {

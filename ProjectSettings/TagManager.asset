@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Location
   - Lure
+  - TowerRange
   layers:
   - Default
   - TransparentFX
