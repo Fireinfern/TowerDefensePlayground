@@ -7,6 +7,8 @@ public class TowerTouchController : MonoBehaviour
 
     [SerializeField]
     private BoxCollider towerTouchCollider;
+    [SerializeField]
+    private List<GameObject> ChildrenToActivate;
     private bool moving = false;
     private bool canBeMoved = true;
 
@@ -34,6 +36,9 @@ public class TowerTouchController : MonoBehaviour
         canBeMoved = false;
         towerTouchCollider.enabled = true;
         gameObject.transform.position = LastPlatform;
+        for(int i = 0; i < ChildrenToActivate.Count; i++){
+            ChildrenToActivate[i].SetActive(true);
+        }
     }
 
     void FixedUpdate()

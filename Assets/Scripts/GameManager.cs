@@ -9,4 +9,8 @@ public class GameManager : MonoBehaviour
     void Awake() {
         instance = this;
     }
+
+    public void destroyEnemy(GameObject enemy) {
+        Destroy(enemy);
+    }
 }

@@ -10,6 +10,7 @@ TagManager:
   - Location
   - Lure
   - TowerRange
+  - Proyectile
   layers:
   - Default
   - TransparentFX
@@ -21,8 +22,8 @@ TagManager:
   - PlacingPlatforms
   - Lure
   - Locations
-  - 
-  - 
+  - Range
+  - Projectile
   - 
   - 
   - 

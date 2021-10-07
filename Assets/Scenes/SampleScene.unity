@@ -3432,5 +3432,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 369917763474455981, guid: 1fc0fa8acb2602245a5641bad44b1390, type: 3}
+      propertyPath: towerToCreate
+      value: 
+      objectReference: {fileID: 4209033801828157263, guid: f77127429607d1f45926ad46cc388506, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1fc0fa8acb2602245a5641bad44b1390, type: 3}

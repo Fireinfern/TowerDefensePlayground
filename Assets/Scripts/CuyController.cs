@@ -7,6 +7,9 @@ public class CuyController : MonoBehaviour
     [SerializeField]
     private float Velocity = 1.0f;
 
+    [SerializeField]
+    private float CurrentLife = 20.0f; 
+
     [Header("CuyPath")]
     [SerializeField]
     private GameObject path;
@@ -17,6 +20,8 @@ public class CuyController : MonoBehaviour
 
     public bool Lured = false;
 
+    private List<GameObject> InRangeOf;
+
     public void SetLocations(GameObject Path){
         path = Path;
         Locations = new Queue<Vector3>(path.gameObject.GetComponent<LevelPath>().GetLocations());
@@ -24,9 +29,11 @@ public class CuyController : MonoBehaviour
 
     void Start() {
         //Locations = new Queue<Vector3>(path.gameObject.GetComponent<LevelPath>().GetLocations());
+        InRangeOf = new List<GameObject>();
     }
 
     void Update() {
+        CheckIfAlive();
         if(Locations.Count != 0 && !Lured) {
             transform.position = Vector3.MoveTowards(transform.position, 
                                                     Locations.Peek(),
@@ -43,10 +50,45 @@ public class CuyController : MonoBehaviour
 
     }
 
+    void CheckIfAlive() {
+        if(CurrentLife <= 0){
+            for(int i = 0; i < InRangeOf.Count; i++){
+                InRangeOf[i].GetComponent<RangeController>().removeEnemyInRange(this.gameObject);
+            }
+            Destroy(this.gameObject);
+        }
+    }
+
     public void NextLocation() {
         if(!ChangingLocation){
             Locations.Dequeue();
             ChangingLocation = true;
+        }
+    }
+
+    public void killCuy(){
+        for(int i = 0; i < this.InRangeOf.Count; i++){
+            InRangeOf[i].GetComponent<RangeController>().removeEnemyInRange(this.gameObject);
+        }
+        GameManager.instance.destroyEnemy(this.gameObject);
+    }
+
+    public void addInRange(GameObject range){
+        this.InRangeOf.Add(range);
+    }
+
+    public void removeInRange(GameObject range){
+        this.InRangeOf.Remove(range);
+    }
+
+    public List<GameObject> getInRange(){
+        return this.InRangeOf;
+    }
+
+    void OnCollisionEnter(Collision other){
+        if(other.collider.tag == "Proyectile"){
+            this.CurrentLife -= other.gameObject.GetComponent<ProjectileController>().Damage;
+            other.gameObject.GetComponent<ProjectileController>().DestroySelf();
         }
     }
 }
